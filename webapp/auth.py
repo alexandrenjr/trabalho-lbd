@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import Usuario
+from .models import Usuarios
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -14,7 +14,7 @@ def login():
         cpf = request.form.get('cpf')
         senha = request.form.get('senha')
 
-        usuario = Usuario.query.filter_by(cpf=cpf).first()
+        usuario = Usuarios.query.filter_by(cpf=cpf).first()
         if usuario:
             if check_password_hash(usuario.senha, senha):
                 flash('Usuário autenticado com sucesso.', category='success')
@@ -43,7 +43,7 @@ def signup():
         senha1 = request.form.get('senha1')
         senha2 = request.form.get('senha2')
 
-        usuario = Usuario.query.filter_by(cns=cns).first()
+        usuario = Usuarios.query.filter_by(cns=cns).first()
         if usuario:
             flash('CPF já existe.', category='error')
         elif len(cns) != 15:
@@ -55,7 +55,7 @@ def signup():
         elif len(senha1) < 7:
             flash('Senha deve ter pelo menos 7 caractéres.', category='error')
         else:
-            novoUsuario = Usuario(cns=cns, cpf=cpf, senha=generate_password_hash(senha1, method='sha256'))
+            novoUsuario = Usuarios(cns=cns, cpf=cpf, senha=generate_password_hash(senha1, method='sha256'))
             db.session.add(novoUsuario)
             db.session.commit()
             login_user(novoUsuario, remember=True)

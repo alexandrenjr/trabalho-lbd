@@ -1,11 +1,10 @@
 from . import db
 from flask_login import UserMixin
-from sqlalchemy.sql import func
 
 
 class Alergias(db.Model):
     cod_alergia = db.Column(db.String(5), primary_key=True)
-    cns = db.Column(db.String(15), db.ForeignKey('pessoa.cns'))
+    cns = db.Column(db.String(15), db.ForeignKey('Pessoa.cns'))
     tipo_alergia = db.Column(db.Boolean)
     nome_alergia = db.Column(db.String(50))
 
@@ -17,14 +16,17 @@ class Consulta(db.Model):
     tipo_consulta = db.Column(db.Boolean())
     data = db.Column(db.DateTime(timezone=True))
     local = db.Column(db.String(50))
-    cns_paciente = db.Column(db.String(15))
+    cns_paciente = db.Column(db.String(15), db.ForeignKey('Paciente.cns_paciente'))
+
+    exames = db.relationship('Exames', cascade='all, delete', back_populates='Consulta')
+    medicamentos = db.relationship('Medicamentos', cascade='all, delete', back_populates='Consulta')
 
     def get_id(self):
         return (self.cod_consulta)
 
 class Exames(db.Model):
     cod_exame = db.Column(db.String(10), primary_key=True)
-    cod_consulta = db.Column(db.String(10), unique=True)
+    cod_consulta = db.Column(db.String(10), db.ForeignKey('Consulta.cod_consulta'), unique=True)
     nome_exame = db.Column(db.String(50))
 
     def get_id(self):
@@ -32,7 +34,7 @@ class Exames(db.Model):
 
 class Medicamentos(db.Model):
     cod_medicamento = db.Column(db.String(10), primary_key=True)
-    cod_consulta = db.Column(db.String(10), unique=True)
+    cod_consulta = db.Column(db.String(10), db.ForeignKey('Consulta.cod_consulta') ,unique=True)
     nome_medicamento = db.Column(db.String(50))
 
     def get_id(self):
@@ -42,6 +44,8 @@ class Paciente(db.Model):
     cns_paciente = db.Column(db.String(15), primary_key=True)
     altura = db.Column(db.Numeric(3,2))
     peso = db.Column(db.Numeric(4,1))
+
+    consulta = db.relationship('Consulta', cascade='all, delete', back_populates='Paciente')
 
     def get_id(self):
         return (self.cns_paciente)
@@ -53,6 +57,9 @@ class Pessoa(db.Model):
     utimo_nome = db.Column(db.String(50))
     tipo_sanguineo = db.Column(db.String(3))
     sexo = db.Column(db.String(1))
+
+    alergias = db.relationship('Alergias', cascade='all, delete', back_populates='Pessoa')
+    usuarios = db.relationship('Usuarios', cascade='all, delete', back_populates='Pessoa')
 
     def get_id(self):
         return (self.cns)
@@ -81,15 +88,15 @@ class Realiza_consulta(db.Model):
     def get_id(self):
         return (self.cr)
 
-class Usuario(db.Model, UserMixin):
+class Usuarios(db.Model, UserMixin):
     cns = db.Column(db.String(15), primary_key=True)
-    cpf = db.Column(db.String(11), unique=True)
+    cpf = db.Column(db.String(11), db.ForeignKey('Pessoa.cpf'), unique=True)
     senha = db.Column(db.String(150))
     
     def get_id(self):
         return (self.cns)
 
-class Vacina(db.Model):
+class Vacinas(db.Model):
     cod_vacina = db.Column(db.String(10), primary_key=True)
     obrigatoriedade = db.Column(db.Boolean())
     nome_vacina = db.Column(db.String(50))
