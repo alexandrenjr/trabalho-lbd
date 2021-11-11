@@ -32,7 +32,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.sus'))
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/cadastrar-se', methods=['GET', 'POST'])
@@ -42,12 +42,13 @@ def signup():
         cpf = request.form.get('cpf')
         primeiro_nome = request.form.get('primeiro_nome')
         ultimo_nome = request.form.get('ultimo_nome')
-        tipo_sanguineo = request.form.get('tipo_sanguineo')
-        sexo = request.form.get('sexo')
+        tipo_sanguineo = request.form.getlist('tipo_sanguineo')
+        sexo = request.form.getlist('sexo')
         senha1 = request.form.get('senha1')
         senha2 = request.form.get('senha2')
 
-        print(sexo)
+        print(sexo[0])
+        print(tipo_sanguineo[0])
 
         usuario = Usuarios.query.filter_by(cns=cns).first()
         if usuario:
@@ -61,8 +62,8 @@ def signup():
         elif len(senha1) < 7:
             flash('Senha deve ter pelo menos 7 caractéres.', category='error')
         else:
-            novaPessoa = Pessoa(cns=cns, cpf=cpf, primeiro_nome=primeiro_nome, ultimo_nome=ultimo_nome, tipo_sanguineo=tipo_sanguineo, sexo=sexo)
-            db.session(novaPessoa)
+            novaPessoa = Pessoa(cns=cns, cpf=cpf, primeiro_nome=primeiro_nome, ultimo_nome=ultimo_nome, tipo_sanguineo=tipo_sanguineo[0], sexo=sexo[0])
+            db.session.add(novaPessoa)
             novoUsuario = Usuarios(cns=cns, cpf=cpf, senha=generate_password_hash(senha1, method='sha256'))
             db.session.add(novoUsuario)
             db.session.commit()
