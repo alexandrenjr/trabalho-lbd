@@ -5,8 +5,8 @@ from flask_login import UserMixin
 class Alergias(db.Model):
     cod_alergia = db.Column(db.String(5), primary_key=True)
     cns = db.Column(db.String(15), db.ForeignKey('pessoa.cns'))
-    tipo_alergia = db.Column(db.Boolean)
-    nome_alergia = db.Column(db.String(50))
+    tipo_alergia = db.Column(db.Boolean, nullable=False)
+    nome_alergia = db.Column(db.String(50), nullable=False)
 
     def get_id(self):
         return (self.cod_consulta)
@@ -54,21 +54,29 @@ class Paciente(db.Model):
 class Pessoa(db.Model):
     cns = db.Column(db.String(15), primary_key=True)
     cpf = db.Column(db.String(11), unique=True)
-    primeiro_nome = db.Column(db.String(50))
-    utimo_nome = db.Column(db.String(50))
-    tipo_sanguineo = db.Column(db.String(3))
-    sexo = db.Column(db.String(1))
+    primeiro_nome = db.Column(db.String(50), nullable=False)
+    ultimo_nome = db.Column(db.String(50), nullable=False)
+    tipo_sanguineo = db.Column(db.String(3), nullable=False)
+    sexo = db.Column(db.String(1), nullable=False)
 
     alergias = db.relationship('Alergias', cascade='all, delete', backref='Pessoa')
-    usuarios = db.relationship('Usuarios', cascade='all, delete', backref='Pessoa')
+    usuarios = db.relationship('Usuarios', cascade='all, delete, save-update', backref='Pessoa')
 
     def get_id(self):
         return (self.cns)
+    
+    def __init__(self, cns, cpf, primeiro_nome, ultimo_nome, tipo_sanguineo, sexo):
+        self.cns = cns
+        self.cpf = cpf
+        self.primeiro_nome = primeiro_nome
+        self.ultimo_nome = ultimo_nome
+        self.tipo_sanguineo = tipo_sanguineo
+        self.sexo = sexo
 
 class Profssnl_sd_especialidade(db.Model):
     especialidade = db.Column(db.String(50), primary_key=True)
     cr = db.Column(db.String(6), db.ForeignKey('profissional_saude.cr'), unique=True)
-    interno = db.Column(db.Boolean)
+    interno = db.Column(db.Boolean, nullable=False)
 
     def get_id(self):
         return (self.especialidade)
@@ -102,9 +110,9 @@ class Usuarios(db.Model, UserMixin):
 
 class Vacinas(db.Model):
     cod_vacina = db.Column(db.String(10), primary_key=True)
-    obrigatoriedade = db.Column(db.Boolean)
-    nome_vacina = db.Column(db.String(50))
-    aplicada = db.Column(db.Boolean)
+    obrigatoriedade = db.Column(db.Boolean, nullable=False)
+    nome_vacina = db.Column(db.String(50), nullable=False)
+    aplicada = db.Column(db.Boolean, nullable=False)
 
     def get_id(self):
         return (self.cod_vacina)

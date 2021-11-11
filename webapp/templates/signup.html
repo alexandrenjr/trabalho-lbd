@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block title %}Cadastrar-se{% endblock %} {% block
     content %}
-    <form method="POST">
+    <form method="POST", autocomplete="off">
       <h3 align="center">Cadastrar-se</h3>
       <div class="form-group">
-        <label for="cns">CNS</label>
+        <label for="cns"><b>CNS</b></label>
         <input
           type="text"
           class="form-control"
@@ -12,8 +12,8 @@
           placeholder="CNS"
         />
       </div>
-      <div class="form-group">
-        <label for="cpf">CPF</label>
+      <div class="form-group", autocomplete="off">
+        <label for="cpf"><b>CPF</b></label>
         <input
           type="text"
           class="form-control"
@@ -22,23 +22,65 @@
           placeholder="CPF"
         />
       </div>
+      <div class="form-group", autocomplete="off">
+        <label for="cpf"><b>Primeiro nome</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="primeiro_nome"
+          name="primeiro_nome"
+          placeholder="Digite o primeiro nome"
+        />
+      </div>
+      <div class="form-group", autocomplete="off">
+        <label for="cpf"><b>Último nome (sobrenome)</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="ultimo_nome"
+          name="ultimo_nome"
+          placeholder="Digite o sobrenome"
+        />
+      </div>
       <div class="form-group">
-        <label for="password1">Senha</label>
+        <label for="tipo_sanguineo"><b>Tipo sanguíneo:</b></label>
+        <select class="form-control" id="tipo_sanguineo">
+          <option selected disabled hidden>Selecione uma opção</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sexo"><b>Sexo:</b></label>
+        <select class="form-control" id="sexo">
+          <option selected disabled hidden>Selecione uma opção</option>
+          <option value='F'>Feminino</option>
+          <option value='M'>Masculino</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="senha1"><b>Senha</b></label>
         <input
           type="password"
           class="form-control"
-          id="password1"
-          name="password1"
+          id="senha1"
+          name="senha1"
           placeholder="Digite uma senha"
         />
       </div>
       <div class="form-group">
-        <label for="password2">Confirme a senha</label>
+        <label for="senha2"><b>Confirme a senha</b></label>
         <input
           type="password"
           class="form-control"
-          id="password2"
-          name="password2"
+          id="senha2"
+          name="senha2"
           placeholder="Confirme a senha"
         />
       </div>
