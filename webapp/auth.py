@@ -19,7 +19,7 @@ def login():
             if check_password_hash(usuario.senha, senha):
                 flash('Usuário autenticado com sucesso.', category='success')
                 login_user(usuario, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('views.paciente'))
             else:
                 flash('Senha incorreta! Por favor, tente novamente.', category='error')
         else:
@@ -32,7 +32,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('views.inicio'))
 
 
 @auth.route('/cadastrar-se', methods=['GET', 'POST'])
@@ -71,6 +71,6 @@ def signup():
             login_user(novoUsuario, remember=True)
             flash('Cadastro criado.', category='success')
            
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.paciente'))
 
     return render_template("signup.html", user=current_user)
