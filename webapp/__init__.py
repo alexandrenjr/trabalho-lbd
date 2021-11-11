@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from sqlalchemy_utils.functions import database_exists, create_database
 
-db_name = 'postgresql+psycopg2://postgres:postgres@localhost:5432/sus'
+db_name = 'postgresql+psycopg2://postgres:postgres@localhost:5432/teste'
 db = SQLAlchemy()
 
 def create_app():
@@ -21,7 +21,7 @@ def create_app():
 
     from .models import Usuarios
 
-    criar_bd(app)
+    criar_db(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -35,7 +35,7 @@ def create_app():
 
     return app
 
-def criar_bd(app):
+def criar_db(app):
     if not database_exists(db_name):
         create_database(db_name)
         db.create_all(app=app)
