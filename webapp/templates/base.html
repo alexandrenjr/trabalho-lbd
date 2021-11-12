@@ -18,7 +18,7 @@
     <title>{% block title %}Início{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
       <button
         class="navbar-toggler"
         type="button"
@@ -30,9 +30,10 @@
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Início</a>
+          <a class="nav-item nav-link" id="paciente" href="/area-do-paciente">Área do Paciente</a>
           <a class="nav-item nav-link" id="logout" href="/sair">Sair</a>
           {% else %}
+          <a class="nav-item nav-link" id="inicio" href="/">Início</a>
           <a class="nav-item nav-link" id="login" href="/entrar">Entrar</a>
           <a class="nav-item nav-link" id="signUp" href="/cadastrar-se">Cadastrar-se</a>
           {% endif %}

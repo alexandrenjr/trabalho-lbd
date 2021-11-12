@@ -61,6 +61,7 @@ class Pessoa(db.Model):
 
     alergias = db.relationship('Alergias', cascade='all, delete', backref='Pessoa')
     usuarios = db.relationship('Usuarios', cascade='all, delete, save-update', backref='Pessoa')
+    vacinas = db.relationship('Vacinas', cascade='all, delete, save-update', backref='Pessoa')
 
     def get_id(self):
         return (self.cns)
@@ -110,6 +111,7 @@ class Usuarios(db.Model, UserMixin):
 
 class Vacinas(db.Model):
     cod_vacina = db.Column(db.String(10), primary_key=True)
+    cns = db.Column(db.String(15), db.ForeignKey('pessoa.cns'), primary_key=True)
     obrigatoriedade = db.Column(db.Boolean, nullable=False)
     nome_vacina = db.Column(db.String(50), nullable=False)
     aplicada = db.Column(db.Boolean, nullable=False)

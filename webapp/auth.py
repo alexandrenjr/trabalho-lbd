@@ -47,9 +47,6 @@ def signup():
         senha1 = request.form.get('senha1')
         senha2 = request.form.get('senha2')
 
-        print(sexo[0])
-        print(tipo_sanguineo[0])
-
         usuario = Usuarios.query.filter_by(cns=cns).first()
         if usuario:
             flash('CPF já existe.', category='error')

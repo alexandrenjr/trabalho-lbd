@@ -25,8 +25,8 @@ def create_app():
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
-    login_manager.login_message = u"Entre com os credenciais para acessar o sistema."
-    login_manager.login_message_category = "info"
+    login_manager.login_message_category = "warning"
+    login_manager.login_message = "Entre com os credenciais para acessar o sistema."
     login_manager.init_app(app)
 
     @login_manager.user_loader
