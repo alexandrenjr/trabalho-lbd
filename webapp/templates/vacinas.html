@@ -1,3 +1,28 @@
-{% extends "base.html" %} {% block title %}Área do Paciente{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Vacinas{% endblock %} {% block content %}
     <h1 align="center">Vacinas</h1>
+    <br>
+    <table align="center" class="table-striped table-hover table-lg table-light">
+        <thead>
+            <tr align="center">
+                <th>Código Vacina&emsp;&emsp;</th>
+                <th>CNS&emsp;&emsp;</th>
+                <th>Obrigatoriedade&emsp;&emsp;</th>
+                <th>Nome da Vacina&emsp;&emsp;</th>
+                <th>Aplicada</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for vacina in vacinas%}
+            {%if user.cns == vacina.cns%}
+                <tr align="left" >
+                    <td>{{vacina.cod_vacina}}&emsp;&emsp;</td>
+                    <td>{{vacina.cns}}&emsp;&emsp;</td>
+                    <td>{{vacina.obrigatoriedade}}&emsp;&emsp;</td>
+                    <td>{{vacina.nome_vacina}}&emsp;&emsp;</td>
+                    <td>{{vacina.aplicada}}</td>
+                </tr>
+            {%endif%}
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

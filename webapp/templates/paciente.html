@@ -1,12 +1,19 @@
 {% extends "base.html" %} {% block title %}Área do Paciente{% endblock %} {% block content %}
-  <h1 align="center">Área do Paciente</h1>
-  
-  <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-info btn-lg btn-block">Consultas</button>
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-success btn-lg btn-block">Vacinas</button>
-    </div>
-  </div>
-  {% endblock %}
+<script>
+  function goToConsultas() {
+    window.location='/consultas';
+  }
+  function goToVacinas() {
+    window.location='/vacinas';
+  }
+</script>  
+ <h1 align="center">Área do Paciente</h1>
+   <div class="row">
+     <div class="col">
+       <button type="button" class="btn btn-info btn-lg btn-block" onclick="goToConsultas ()">Consultas</button>
+     </div>
+     <div class="col">
+       <button type="button" class="btn btn-success btn-lg btn-block" onclick="goToVacinas()">Vacinas</button>
+     </div>
+   </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from sqlalchemy_utils.functions import database_exists, create_database
 
-db_name = 'postgresql+psycopg2://postgres:postgres@localhost:5432/susdb'
+db_name = 'postgresql+psycopg2://postgres:postgres@localhost:5432/teste'
 db = SQLAlchemy()
 
 def create_app():
