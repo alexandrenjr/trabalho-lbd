@@ -19,8 +19,8 @@ class Consulta(db.Model):
     local = db.Column(db.String(50), nullable=False)
     cns_paciente = db.Column(db.String(15), db.ForeignKey('paciente.cns_paciente'))
 
-    exames = db.relationship('Exames', cascade='all, delete, save-update', back_populates='consulta')
-    medicamentos = db.relationship('Medicamentos', cascade='all, delete, save-update', back_populates='consulta')
+    exames = db.relationship('Exames', back_populates='consulta', cascade='all, delete')
+    medicamentos = db.relationship('Medicamentos', back_populates='consulta', cascade='all, delete')
     paciente = db.relationship('Paciente', back_populates='consulta')
     profissional_saude = db.relationship('Profissional_saude', secondary='realiza_consulta', back_populates='consulta')
     
@@ -52,8 +52,8 @@ class Paciente(db.Model):
     altura = db.Column(db.Numeric(3,2))
     peso = db.Column(db.Numeric(4,1))
 
-    consulta = db.relationship('Consulta', back_populates='paciente')
-    pessoa = db.relationship('Pessoa', cascade='all, delete, save-update', back_populates='paciente')
+    consulta = db.relationship('Consulta', back_populates='paciente', cascade='all, delete')
+    pessoa = db.relationship('Pessoa', back_populates='paciente', cascade='all, delete')
 
     def get_id(self):
         return (self.cns_paciente)
@@ -66,10 +66,10 @@ class Pessoa(db.Model):
     tipo_sanguineo = db.Column(db.String(3), nullable=False)
     sexo = db.Column(db.String(1), nullable=False)
 
-    alergias = db.relationship('Alergias', cascade='all, delete, save-update', back_populates='pessoa')
-    paciente = db.relationship('Paciente', cascade='all, delete, save-update', back_populates='pessoa', uselist=False)
-    usuarios = db.relationship('Usuarios', cascade='all, delete, save-update', back_populates='pessoa', uselist=False)
-    vacinas = db.relationship('Vacinas', cascade='all, delete, save-update', back_populates='pessoa')
+    alergias = db.relationship('Alergias', back_populates='pessoa', cascade='all, delete')
+    paciente = db.relationship('Paciente', back_populates='pessoa', uselist=False, cascade='all, delete')
+    usuarios = db.relationship('Usuarios', back_populates='pessoa', uselist=False, cascade='all, delete')
+    vacinas = db.relationship('Vacinas', back_populates='pessoa', cascade='all, delete')
 
     def get_id(self):
         return (self.cns)
@@ -87,7 +87,7 @@ class Profissional_saude(db.Model):
     cns_profissional_saude = db.Column(db.String(15), db.ForeignKey('pessoa.cns'))
     especialidade = db.Column(db.String(50))
 
-    consulta = db.relationship('Consulta', secondary='realiza_consulta', cascade='all, delete, save-update', back_populates='profissional_saude')
+    consulta = db.relationship('Consulta', secondary='realiza_consulta', back_populates='profissional_saude')
 
     def get_id(self):
         return (self.cr)
@@ -97,7 +97,7 @@ class Usuarios(db.Model, UserMixin):
     cpf = db.Column(db.String(11), db.ForeignKey('pessoa.cpf'), unique=True)
     senha = db.Column(db.String(150))
 
-    pessoa = db.relationship('Pessoa', cascade='all, delete, save-update', back_populates='usuarios')
+    pessoa = db.relationship('Pessoa', back_populates='usuarios')
     
     def get_id(self):
         return (self.cns)

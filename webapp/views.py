@@ -62,6 +62,8 @@ def editar(cod_consulta):
         consulta.data = request.form.get('data')
         consulta.hora = request.form.get('hora')
 
+        cr = Profissional_saude.query.filter_by(especialidade=consulta.especialidade).first()
+        consulta.profissional_saude.append(cr)
         db.session.commit()
 
         return redirect('/consultas')
