@@ -14,7 +14,6 @@ class Alergias(db.Model):
 
 class Consulta(db.Model):
     cod_consulta = db.Column(db.String(10), primary_key=True)
-    tipo_consulta = db.Column(db.Boolean, nullable=False)
     data = db.Column(db.DateTime(timezone=True), nullable=False)
     local = db.Column(db.String(50), nullable=False)
     cns_paciente = db.Column(db.String(15), db.ForeignKey('paciente.cns_paciente'))
