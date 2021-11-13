@@ -19,8 +19,10 @@ def paciente():
 @views.route('/consultas', methods=['GET', 'POST'])
 @login_required
 def consultas():
-
-    return render_template("consultas.html", user=current_user)
+    consultas = Consulta.query.filter_by(cns_paciente=current_user.cns)
+    nomePrfssnlSd = Consulta.query.all()
+    print(nomePrfssnlSd)
+    return render_template("consultas.html", user=current_user, consultas=consultas, profissional_saude=nomePrfssnlSd)
 
 @views.route('/nova-consulta/', methods=['GET', 'POST'])
 @login_required
@@ -40,24 +42,34 @@ def nova_consulta():
             data=data
         )
 
+        cr = Profissional_saude.query.filter_by(especialidade=especialidade).first()
+        novaConsulta.profissional_saude.append(cr)
         db.session.add(novaConsulta)
         db.session.commit()
 
         return redirect('/consultas')
-    return render_template("novaconsulta.html", user=current_user, especialidades=especialidades)
+    return render_template("nova.html", user=current_user, especialidades=especialidades)
 
-@views.route('/editar/<cod_consulta>')
+@views.route('/editar/<cod_consulta>/', methods=['GET', 'POST'])
 @login_required
 def editar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
-    db.session.delete(consulta)
-    db.session.commit()
+    especialidades = db.session.query(Profissional_saude.especialidade)
 
-    return redirect('/consultas')
+    if request.method == 'POST':
+        consulta.especialidade = request.form.get('especialidade')
+        consulta.local = request.form.get('local')
+        consulta.data = request.form.get('data')
+        consulta.hora = request.form.get('hora')
 
-@views.route('/apagar/<cod_consulta>')
+        db.session.commit()
+
+        return redirect('/consultas')
+    return render_template("editar.html", user=current_user, consulta=consulta, especialidades=especialidades)
+
+@views.route('/desmarcar/<cod_consulta>')
 @login_required
-def apagar(cod_consulta):
+def desmarcar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
     db.session.delete(consulta)
     db.session.commit()
