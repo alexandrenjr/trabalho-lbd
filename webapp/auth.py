@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import Usuarios, Pessoa
-from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -16,7 +15,7 @@ def login():
 
         usuario = Usuarios.query.filter_by(cpf=cpf).first()
         if usuario:
-            if check_password_hash(usuario.senha, senha):
+            if usuario.senha == senha:
                 flash('Usuário autenticado com sucesso.', category='success')
                 login_user(usuario, remember=True)
                 return redirect(url_for('views.paciente'))
@@ -61,7 +60,7 @@ def signup():
         else:
             novaPessoa = Pessoa(cns=cns, cpf=cpf, primeiro_nome=primeiro_nome, ultimo_nome=ultimo_nome, tipo_sanguineo=tipo_sanguineo[0], sexo=sexo[0])
             db.session.add(novaPessoa)
-            novoUsuario = Usuarios(cns=cns, cpf=cpf, senha=generate_password_hash(senha1, method='sha256'))
+            novoUsuario = Usuarios(cns=cns, cpf=cpf, senha=senha1)
             db.session.add(novoUsuario)
             db.session.commit()
            
