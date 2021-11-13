@@ -29,19 +29,13 @@ INSERT INTO vacinas VALUES ('1234567890',
 );
 
 INSERT INTO profissional_saude VALUES ('111111',
-	'112233445566778'
+	'112233445566778',
+	'Obstetra'
 );
 
 INSERT INTO profissional_saude VALUES ('222222',
-	'102030405060708'
-);
-
-INSERT INTO prfssnl_sd_especialidade VALUES ('Obstetra',
-	'111111'
-);
-
-INSERT INTO prfssnl_sd_especialidade VALUES ('Médico da Família',
-	'222222'
+	'102030405060708',
+	'Médico da família'
 );
 
 INSERT INTO usuarios VALUES ('112233445566778',

@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}Consultas{% endblock %} {% block content %}
+<br>
+<h3 align="center">Nova consulta</h3>
+<form action="/nova-consulta/" method="POST", autocomplete="off">
+    <div class="form-group">
+      <label for=""><b>Especialidade</b></label>
+      <input
+        type="text"
+        class="form-control"
+        id="especialidade"
+        name="especialidade"
+        placeholder="Especialidade"
+      />
+    </div>
+    <div class="form-group">
+      <label for="local"><b>Local:</b></label>
+      <select name="local" class="form-control" id="local">
+        <option selected disabled hidden>Selecione uma opção</option>
+        <option>Santa Casa</option>
+        <option>Hospital Regional</option>
+        <option>Hospital Universitário</option>
+      </select>
+    </div>
+    <div class="form-group">
+        <label for="data"><b>Data:</b></label>
+        <input class="form-control" id="data" type="date">
+    </div>
+    <div class="form-group">
+      <label for="hora"><b>Hora:</b></label>
+      <input class="form-control" id="hora" type="time">
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Cadastar</button>
+</form>
+{% endblock %}

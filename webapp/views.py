@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
-from .models import Consulta
+from .models import Consulta, Pessoa, Profissional_saude, Vacinas
 from . import db
 
 views = Blueprint('views', __name__)
@@ -22,21 +22,25 @@ def consultas():
 
     return render_template("consultas.html", user=current_user)
 
-@views.route('/consultas/nova_consulta/', methods=['GET', 'POST'])
+@views.route('/nova-consulta/', methods=['GET', 'POST'])
 @login_required
 def nova_consulta():
+    especialidades = db.session.query(Profissional_saude.especialidade)
+
     if request.method == 'POST':
-        local = request.form['local']
-        data = request.form.getlist('data')
-        hora = request.form.getlist('hora')
+        local = request.form.get('local')
+        data = request.form.get('data')
+        hora = request.form.get('hora')
 
-        print(local[0])
-        print(data[0])
-        print(hora[0])
+        print(local)
+        print(data)
+        print(hora)
 
-    return redirect('/consultas')
+        return redirect('/consultas')
+    return render_template("novaconsulta.html", user=current_user, especialidades=especialidades)
 
-@views.route('/consultas/editar/<cod_consulta>')
+
+@views.route('/editar/<cod_consulta>')
 def editar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
     db.session.delete(consulta)
@@ -44,7 +48,7 @@ def editar(cod_consulta):
 
     return redirect('/consultas')
 
-@views.route('/consultas/apagar/<cod_consulta>')
+@views.route('/apagar/<cod_consulta>')
 def apagar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
     db.session.delete(consulta)
@@ -52,7 +56,9 @@ def apagar(cod_consulta):
 
     return redirect('/consultas')
 
-@views.route('/vacinas', methods=['GET', 'POST'])
+@views.route('/vacinas/<cns>', methods=['GET', 'POST'])
 @login_required
-def vacinas():
-    return render_template("vacinas.html", user=current_user)
+def vacinas(cns):
+    vacinas = Vacinas.query.filter_by(cns=cns)
+    
+    return render_template("vacinas.html", user=current_user, vacinas=vacinas)

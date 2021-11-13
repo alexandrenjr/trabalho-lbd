@@ -81,21 +81,12 @@ class Pessoa(db.Model):
     #    self.tipo_sanguineo = tipo_sanguineo
     #    self.sexo = sexo
 
-class Prfssnl_sd_especialidade(db.Model):
-    especialidade = db.Column(db.String(50), primary_key=True)
-    cr = db.Column(db.String(6), db.ForeignKey('profissional_saude.cr'), primary_key=True)
-
-    profissional_saude = db.relationship('Profissional_saude', cascade='all, delete, save-update', back_populates='prfssnl_sd_especialidade')
-
-    def get_id(self):
-        return (self.especialidade)
-
 class Profissional_saude(db.Model):
     cr = db.Column(db.String(6), primary_key=True)
     cns_profissional_saude = db.Column(db.String(15), db.ForeignKey('pessoa.cns'))
+    especialidade = db.Column(db.String(50))
 
     consulta = db.relationship('Consulta', secondary='realiza_consulta', cascade='all, delete, save-update', back_populates='profissional_saude')
-    prfssnl_sd_especialidade = db.relationship('Prfssnl_sd_especialidade', cascade='all, delete, save-update', back_populates='profissional_saude', uselist=False)
 
     def get_id(self):
         return (self.cr)
