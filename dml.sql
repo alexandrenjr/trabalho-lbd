@@ -38,6 +38,10 @@ INSERT INTO profissional_saude VALUES ('222222',
 	'Médico da família'
 );
 
+INSERT INTO paciente VALUES ('112233445566778');
+
+INSERT INTO paciente VALUES ('102030405060708');
+
 INSERT INTO usuarios VALUES ('112233445566778',
 	'11223344556',
 	'123123123'
@@ -46,4 +50,20 @@ INSERT INTO usuarios VALUES ('112233445566778',
 INSERT INTO usuarios VALUES ('102030405060708',
 	'10203040506',
 	'123123123'
+);
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+
+INSERT INTO pessoa VALUES ('123123123123123',
+	'12312312312',
+	'Gregory',
+	'House',
+	'A-',
+	'M'
+);
+
+INSERT INTO profissional_saude VALUES ('333333',
+	'123123123123123',
+	'Diagnostician'
 );

@@ -13,8 +13,9 @@ class Alergias(db.Model):
         return (self.cod_consulta)
 
 class Consulta(db.Model):
-    cod_consulta = db.Column(db.String(10), primary_key=True)
-    data = db.Column(db.DateTime(timezone=True), nullable=False)
+    cod_consulta = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    data = db.Column(db.Date, nullable=False)
+    hora = db.Column(db.Time, nullable=False)
     local = db.Column(db.String(50), nullable=False)
     cns_paciente = db.Column(db.String(15), db.ForeignKey('paciente.cns_paciente'))
 
@@ -28,7 +29,7 @@ class Consulta(db.Model):
 
 class Exames(db.Model):
     cod_exame = db.Column(db.String(10), primary_key=True)
-    cod_consulta = db.Column(db.String(10), db.ForeignKey('consulta.cod_consulta'), primary_key=True)
+    cod_consulta = db.Column(db.Integer, db.ForeignKey('consulta.cod_consulta'), primary_key=True)
     nome_exame = db.Column(db.String(50), nullable=False)
 
     consulta = db.relationship('Consulta', back_populates='exames')
@@ -38,7 +39,7 @@ class Exames(db.Model):
 
 class Medicamentos(db.Model):
     cod_medicamento = db.Column(db.String(10), primary_key=True)
-    cod_consulta = db.Column(db.String(10), db.ForeignKey('consulta.cod_consulta'), primary_key=True)
+    cod_consulta = db.Column(db.Integer, db.ForeignKey('consulta.cod_consulta'), primary_key=True)
     nome_medicamento = db.Column(db.String(50), nullable=False)
 
     consulta = db.relationship('Consulta', back_populates='medicamentos')
@@ -116,5 +117,5 @@ class Vacinas(db.Model):
 ## Tabela de associação entre Profissional_saude e Consulta
 realiza_consulta = db.Table('realiza_consulta',
     db.Column('cr', db.String(6), db.ForeignKey('profissional_saude.cr'), primary_key=True),
-    db.Column('cod_consulta', db.String(10), db.ForeignKey('consulta.cod_consulta'), primary_key=True)
+    db.Column('cod_consulta', db.Integer, db.ForeignKey('consulta.cod_consulta'), primary_key=True)
 )

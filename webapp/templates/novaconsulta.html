@@ -1,16 +1,15 @@
 {% extends "base.html" %} {% block title %}Consultas{% endblock %} {% block content %}
 <br>
-<h3 align="center">Nova consulta</h3>
+<h3 align="center"><b>Nova consulta</b></h3>
 <form action="/nova-consulta/" method="POST", autocomplete="off">
     <div class="form-group">
-      <label for=""><b>Especialidade</b></label>
-      <input
-        type="text"
-        class="form-control"
-        id="especialidade"
-        name="especialidade"
-        placeholder="Especialidade"
-      />
+      <label for="local"><b>Especialidade:</b></label>
+      <select name="especialidade" class="form-control" id="especialidade">
+        <option selected disabled hidden>Selecione uma opção</option>
+        {%for especialidade in especialidades%}
+          <option>{{ especialidade[0] }}</option>
+        {%endfor%}
+      </select>
     </div>
     <div class="form-group">
       <label for="local"><b>Local:</b></label>
@@ -23,13 +22,13 @@
     </div>
     <div class="form-group">
         <label for="data"><b>Data:</b></label>
-        <input class="form-control" id="data" type="date">
+        <input class="form-control" id="data" name="data" type="date">
     </div>
     <div class="form-group">
       <label for="hora"><b>Hora:</b></label>
-      <input class="form-control" id="hora" type="time">
+      <input class="form-control" id="hora" name="hora" type="time">
     </div>
     <br/>
-    <button type="submit" class="btn btn-primary">Cadastar</button>
+    <button type="submit" class="btn btn-primary">Agendar</button>
 </form>
 {% endblock %}

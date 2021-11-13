@@ -28,19 +28,26 @@ def nova_consulta():
     especialidades = db.session.query(Profissional_saude.especialidade)
 
     if request.method == 'POST':
+        cns_paciente = current_user.cns
+        especialidade = request.form.get('especialidade')
         local = request.form.get('local')
         data = request.form.get('data')
         hora = request.form.get('hora')
 
-        print(local)
-        print(data)
-        print(hora)
+        novaConsulta = Consulta(cns_paciente=cns_paciente,
+            local=local,
+            hora=hora,
+            data=data
+        )
+
+        db.session.add(novaConsulta)
+        db.session.commit()
 
         return redirect('/consultas')
     return render_template("novaconsulta.html", user=current_user, especialidades=especialidades)
 
-
 @views.route('/editar/<cod_consulta>')
+@login_required
 def editar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
     db.session.delete(consulta)
@@ -49,6 +56,7 @@ def editar(cod_consulta):
     return redirect('/consultas')
 
 @views.route('/apagar/<cod_consulta>')
+@login_required
 def apagar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
     db.session.delete(consulta)
