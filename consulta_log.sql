@@ -27,7 +27,7 @@ BEGIN
 									 old.hora, new.hora, old.local, new.local, old.cns_paciente,
 									 old.especialidade, new.especialidade 'DELETE', NOW());
 	END IF;
-	RETURN new;
+	RETURN old;
 END;
 $$ LANGUAGE plpgsql;
 

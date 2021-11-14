@@ -3,8 +3,8 @@
     <h1 action="/vacinas/{{ user.cns }}"" align="center">Vacinas</h1>
     <br>
     <div class="container">
-        <table class="table table-striped table-dark">
-            <thead>
+        <table class="table table-striped table-light">
+            <thead class="thead-dark">
               <tr>
                 <th scope="col">Código Vacina</th>
                 <th scope="col">Nome Vacina</th>
@@ -31,5 +31,6 @@
                 {% endfor %}
             </tbody>
         </table>
+        <button type="button" class="btn btn-secondary"><a class="text-light" href="/area-do-paciente">Voltar</a></button>
     </div>
 {% endblock %}
