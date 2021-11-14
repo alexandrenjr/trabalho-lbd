@@ -6,8 +6,10 @@
       <label for="local"><b>Especialidade:</b></label>
       <select name="especialidade" class="form-control" id="especialidade">
         <option selected disabled hidden>Selecione uma opção</option>
-        {%for especialidade in especialidades%}
-          <option>{{ especialidade[0] }}</option>
+        {%for e in especialidades%}
+        {%if especialidade != e%}
+          <option>{{ e[0] }}</option>
+        {%endif%}
         {%endfor%}
       </select>
     </div>

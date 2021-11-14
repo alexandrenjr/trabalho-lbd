@@ -14,6 +14,7 @@
                 <th scope="col">Data</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Local</th>
+                <th scope="col">Especialidade</th>
                 <th scope="col">Profissional Saúde</th>
                 <th scope="col">Ações</th>
               </tr>
@@ -26,7 +27,8 @@
                         <td>{{consulta.data}}</td>
                         <td>{{consulta.hora}}</td>
                         <td>{{consulta.local}}</td>
-                        <td>{{profissional_saude.cr}}</td>
+                        <td>{{consulta.especialidade}}</td>
+                        <td>{{consulta.especialidade}}</td>
                         <td><button class="btn btn-warning"><a class="text-light" href="/editar/{{consulta.cod_consulta}}">Alterar</a></button></td>
                         <td><button class="btn btn-danger"><a class="text-light" href="/desmarcar/{{consulta.cod_consulta}}">Desmarcar</a></button></td>
                     </tr>

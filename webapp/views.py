@@ -19,14 +19,14 @@ def paciente():
 @views.route('/consultas', methods=['GET', 'POST'])
 @login_required
 def consultas():
-    consultas = Consulta.query.filter_by(cns_paciente=current_user.cns)
-    nomePrfssnlSd = Consulta.query.all()
-    print(nomePrfssnlSd)
-    return render_template("consultas.html", user=current_user, consultas=consultas, profissional_saude=nomePrfssnlSd)
+    consultas = Consulta.query.filter_by(cns_paciente=current_user.cns).all()
+
+    return render_template("consultas.html", user=current_user, consultas=consultas)
 
 @views.route('/nova-consulta/', methods=['GET', 'POST'])
 @login_required
 def nova_consulta():
+    especialidade = db.session.query(Profissional_saude.especialidade).filter_by(cns_profissional_saude=current_user.cns).first()
     especialidades = db.session.query(Profissional_saude.especialidade)
 
     if request.method == 'POST':
@@ -39,7 +39,8 @@ def nova_consulta():
         novaConsulta = Consulta(cns_paciente=cns_paciente,
             local=local,
             hora=hora,
-            data=data
+            data=data,
+            especialidade=especialidade
         )
 
         cr = Profissional_saude.query.filter_by(especialidade=especialidade).first()
@@ -48,12 +49,13 @@ def nova_consulta():
         db.session.commit()
 
         return redirect('/consultas')
-    return render_template("nova.html", user=current_user, especialidades=especialidades)
+    return render_template("nova.html", user=current_user, especialidade=especialidade, especialidades=especialidades)
 
 @views.route('/editar/<cod_consulta>/', methods=['GET', 'POST'])
 @login_required
 def editar(cod_consulta):
     consulta = Consulta.query.get(cod_consulta)
+    especialidade = db.session.query(Profissional_saude.especialidade).filter_by(cns_profissional_saude=current_user.cns).first()
     especialidades = db.session.query(Profissional_saude.especialidade)
 
     if request.method == 'POST':
@@ -67,7 +69,7 @@ def editar(cod_consulta):
         db.session.commit()
 
         return redirect('/consultas')
-    return render_template("editar.html", user=current_user, consulta=consulta, especialidades=especialidades)
+    return render_template("editar.html", user=current_user, consulta=consulta, especialidade=especialidade, especialidades=especialidades)
 
 @views.route('/desmarcar/<cod_consulta>')
 @login_required
