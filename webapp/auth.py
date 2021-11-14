@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import Usuarios, Pessoa
+from .models import Usuarios, Pessoa, Paciente
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -60,6 +60,8 @@ def signup():
         else:
             novaPessoa = Pessoa(cns=cns, cpf=cpf, primeiro_nome=primeiro_nome, ultimo_nome=ultimo_nome, tipo_sanguineo=tipo_sanguineo[0], sexo=sexo[0])
             db.session.add(novaPessoa)
+            novoPaciente = Paciente(cns_paciente=cns)
+            db.session.add(novoPaciente)
             novoUsuario = Usuarios(cns=cns, cpf=cpf, senha=senha1)
             db.session.add(novoUsuario)
             db.session.commit()
