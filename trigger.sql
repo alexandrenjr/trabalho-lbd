@@ -25,7 +25,7 @@ BEGIN
 	ELSE
 	INSERT INTO consulta_log VALUES (old.cod_consulta, new.cod_consulta, old.data, new.data, 
 									 old.hora, new.hora, old.local, new.local, old.cns_paciente,
-									 old.especialidade, new.especialidade 'DELETE', NOW());
+									 old.especialidade, new.especialidade, 'DELETE', NOW());
 	END IF;
 	RETURN old;
 END;
