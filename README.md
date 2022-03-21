@@ -10,19 +10,19 @@ Clone este repositório:
 git clone <url-repo>
 ```
 
-Crie um ambiente virtual no Python:
+Em um terminal, crie um ambiente virtual no Python com o seguinte comando:
 
 ```bash
 python -m venv env
 ```
 
-Ative o ambiente virtual:
+Ative tal ambiente:
 
 ```bash
 env\Scripts\activate
 ```
 
-Instale as dependências:
+Instale as dependências com o seguinte comando:
 
 ```bash
 pip install -r requirements.txt
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Executando a Aplicação
 
-Execute a aplicação:
+Execute a aplicação com:
 
 ```bash
 python main.py
@@ -38,4 +38,4 @@ python main.py
 
 ## Visualizando a Aplicação
 
-Vá para [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+Finalemten, aá para [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
