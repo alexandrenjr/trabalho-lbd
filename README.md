@@ -39,3 +39,19 @@ python main.py
 ## Visualizando a Aplicação
 
 Finalemten, aá para [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+
+## Observação
+
+A *string* que inicializa um *database* no *PostgreSQL* em [`__init__.py`](webapp/__init__.py) (linha 6) é a seguinte:
+
+```bash
+postgresql+psycopg2://postgres:postgres@localhost:5432/trabalhodb
+```
+
+onde possui o seguinte formato:
+
+```bash
+postgresql+psycopg2://usuario:senha@localhost:porta/database
+```
+Definido tais campos, a aplicação irá criar um *database* com nome *database*, caso ela não
+exista, de forma automática.
